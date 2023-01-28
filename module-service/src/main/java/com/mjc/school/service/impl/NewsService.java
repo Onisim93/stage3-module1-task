@@ -1,5 +1,6 @@
 package com.mjc.school.service.impl;
 
+import com.mjc.school.repository.Repository;
 import com.mjc.school.repository.impl.NewsRepository;
 import com.mjc.school.repository.entity.NewsModel;
 import com.mjc.school.service.AbstractService;
@@ -15,7 +16,7 @@ import java.util.List;
 
 public class NewsService implements AbstractService<NewsDto> {
     private final String NO_SUCH_ENTITY_MSG = "%s with id %d does not exist.";
-    private final NewsRepository newsRepository;
+    private final Repository<NewsModel> newsRepository;
     private final NewsValidator newsValidator;
 
     public NewsService() {
