@@ -1,7 +1,5 @@
 package com.mjc.school.repository;
 
-import com.mjc.school.repository.entity.AbstractBaseEntity;
-
 import java.util.List;
 
 public interface Repository<E> {

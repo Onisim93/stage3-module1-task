@@ -5,11 +5,11 @@ import java.util.List;
 public interface AbstractService<E> {
     E create (E entity);
 
-    List<E> getAll();
+    List<E> readAll();
 
-    E get (long id);
+    E readById(Long id);
 
-    boolean delete (long id);
+    Boolean delete (Long id);
 
     E update (E entity);
 

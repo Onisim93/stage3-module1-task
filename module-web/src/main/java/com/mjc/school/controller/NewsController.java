@@ -1,7 +1,7 @@
 package com.mjc.school.controller;
 
 import com.mjc.school.service.AbstractService;
-import com.mjc.school.service.NewsService;
+import com.mjc.school.service.impl.NewsService;
 import com.mjc.school.service.dto.NewsDto;
 
 import java.util.List;
@@ -33,12 +33,12 @@ public class NewsController implements CrudController<NewsDto> {
 
     @Override
     public NewsDto get(long id) {
-        return service.get(id);
+        return service.readById(id);
     }
 
     @Override
     public List<NewsDto> getAll() {
-        return service.getAll();
+        return service.readAll();
     }
 
     @Override

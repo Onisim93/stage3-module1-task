@@ -5,16 +5,12 @@ import com.mjc.school.service.exception.ErrorNotification;
 
 public class NewsValidator {
 
-    private static final String TITLE_NO_VALID = "ERROR_CODE: 000003 News title field should have length of value from 5 to 30.";
-    private static final String CONTENT_NO_VALID = "ERROR_CODE: 000004 News content field should have length of value from 5 to 255.";
+    private final String TITLE_NO_VALID = "ERROR_CODE: 000003 News title field should have length of value from 5 to 30.";
+    private final String CONTENT_NO_VALID = "ERROR_CODE: 000004 News content field should have length of value from 5 to 255.";
 
-    public static boolean isNew (NewsDto news) {
-        return news.getId() == null;
-    }
+    public NewsValidator() {}
 
-    private NewsValidator() {}
-
-    public static ErrorNotification validate (NewsDto news) {
+    public ErrorNotification validate (NewsDto news) {
         ErrorNotification errorNotification = new ErrorNotification();
 
         String title = news.getTitle();

@@ -1,8 +1,9 @@
-package com.mjc.school.service;
+package com.mjc.school.service.impl;
 
 import com.mjc.school.repository.impl.AuthorRepository;
 import com.mjc.school.repository.impl.NewsRepository;
 import com.mjc.school.repository.entity.NewsModel;
+import com.mjc.school.service.AbstractService;
 import com.mjc.school.service.dto.NewsDto;
 import com.mjc.school.service.exception.InvalidDataException;
 import com.mjc.school.service.exception.NoSuchEntityException;
@@ -18,14 +19,17 @@ public class NewsService implements AbstractService<NewsDto> {
     private final NewsRepository newsRepository;
     private final AuthorRepository authorRepository;
 
+    private final NewsValidator newsValidator;
+
     public NewsService() {
         newsRepository = new NewsRepository();
         authorRepository = new AuthorRepository();
+        newsValidator = new NewsValidator();
     }
 
     @Override
     public NewsDto create(NewsDto entity) {
-        ErrorNotification errorNotification = NewsValidator.validate(entity);
+        ErrorNotification errorNotification = newsValidator.validate(entity);
         if (errorNotification.hasErrors()) {
             throw new InvalidDataException(errorNotification.getErrorList().toString());
         }
@@ -38,12 +42,12 @@ public class NewsService implements AbstractService<NewsDto> {
     }
 
     @Override
-    public List<NewsDto> getAll() {
+    public List<NewsDto> readAll() {
         return NewsMapper.INSTANCE.toListDto(newsRepository.readAll());
     }
 
     @Override
-    public NewsDto get(long id) throws NoSuchEntityException{
+    public NewsDto readById(Long id) throws NoSuchEntityException{
         NewsModel entity = newsRepository.readById(id);
         if (entity == null) {
             throw new NoSuchEntityException(String.format(NO_SUCH_ENTITY_MSG, "News", id));
@@ -52,7 +56,7 @@ public class NewsService implements AbstractService<NewsDto> {
     }
 
     @Override
-    public boolean delete(long id) {
+    public Boolean delete(Long id) {
         if (!newsRepository.delete(id)) {
             throw new NoSuchEntityException(String.format(NO_SUCH_ENTITY_MSG, "News", id));
         }
@@ -70,7 +74,7 @@ public class NewsService implements AbstractService<NewsDto> {
             throw new NoSuchEntityException(String.format(NO_SUCH_ENTITY_MSG, "Author", entity.getAuthorId()));
         }
 
-        ErrorNotification errorNotification = NewsValidator.validate(entity);
+        ErrorNotification errorNotification = newsValidator.validate(entity);
         if (errorNotification.hasErrors()) {
             throw new InvalidDataException(errorNotification.getErrorList().toString());
         }
