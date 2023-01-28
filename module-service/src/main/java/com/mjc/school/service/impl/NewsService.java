@@ -3,7 +3,7 @@ package com.mjc.school.service.impl;
 import com.mjc.school.repository.Repository;
 import com.mjc.school.repository.impl.NewsRepository;
 import com.mjc.school.repository.entity.NewsModel;
-import com.mjc.school.service.AbstractService;
+import com.mjc.school.service.Service;
 import com.mjc.school.service.dto.NewsDto;
 import com.mjc.school.service.exception.InvalidDataException;
 import com.mjc.school.service.exception.NoSuchEntityException;
@@ -14,7 +14,7 @@ import com.mjc.school.service.validation.NewsValidator;
 import java.util.List;
 
 
-public class NewsService implements AbstractService<NewsDto> {
+public class NewsService implements Service<NewsDto> {
     private final String NO_SUCH_ENTITY_MSG = "%s with id %d does not exist.";
     private final Repository<NewsModel> newsRepository;
     private final NewsValidator newsValidator;

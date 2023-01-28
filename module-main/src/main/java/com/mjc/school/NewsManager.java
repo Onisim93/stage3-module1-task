@@ -1,8 +1,9 @@
 package com.mjc.school;
 
 import com.mjc.school.command.news.NewsCommandExecutor;
+import com.mjc.school.service.impl.NewsService;
 import com.mjc.school.util.MessageHelper;
-import com.mjc.school.controller.NewsController;
+import com.mjc.school.controller.impl.NewsController;
 import com.mjc.school.command.Operation;
 
 import java.io.IOException;
@@ -14,7 +15,7 @@ public class NewsManager {
     private final Menu menu;
 
     private NewsManager() {
-        controller = NewsController.getInstance();
+        controller = new NewsController(new NewsService());
         menu = Menu.getInstance();
     }
 

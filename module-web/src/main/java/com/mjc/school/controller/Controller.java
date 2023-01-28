@@ -2,17 +2,17 @@ package com.mjc.school.controller;
 
 import java.util.List;
 
-public interface CrudController<E> {
+public interface Controller<E> {
 
     E create(E entity);
 
     E update(E entity);
 
-    E get(long id);
+    E readById(Long id);
 
-    List<E> getAll();
+    List<E> readAll();
 
-    Boolean delete(long id);
+    Boolean delete(Long id);
 
 
 
