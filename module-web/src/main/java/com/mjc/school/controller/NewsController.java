@@ -2,14 +2,14 @@ package com.mjc.school.controller;
 
 import com.mjc.school.service.AbstractService;
 import com.mjc.school.service.NewsService;
-import com.mjc.school.service.dto.NewsDTO;
+import com.mjc.school.service.dto.NewsDto;
 
 import java.util.List;
 
-public class NewsController implements CrudController<NewsDTO> {
+public class NewsController implements CrudController<NewsDto> {
     private static NewsController instance;
-    private AbstractService<NewsDTO> service;
-    public NewsController(AbstractService<NewsDTO> service) {
+    private AbstractService<NewsDto> service;
+    public NewsController(AbstractService<NewsDto> service) {
         this.service = service;
     }
 
@@ -22,22 +22,22 @@ public class NewsController implements CrudController<NewsDTO> {
     }
 
     @Override
-    public NewsDTO create(NewsDTO entity) {
+    public NewsDto create(NewsDto entity) {
         return service.create(entity);
     }
 
     @Override
-    public NewsDTO update(NewsDTO entity) {
+    public NewsDto update(NewsDto entity) {
         return service.update(entity);
     }
 
     @Override
-    public NewsDTO get(long id) {
+    public NewsDto get(long id) {
         return service.get(id);
     }
 
     @Override
-    public List<NewsDTO> getAll() {
+    public List<NewsDto> getAll() {
         return service.getAll();
     }
 

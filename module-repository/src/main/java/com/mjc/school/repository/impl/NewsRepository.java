@@ -1,54 +1,45 @@
 package com.mjc.school.repository.impl;
 
 import com.mjc.school.repository.CrudRepository;
-import com.mjc.school.repository.entity.News;
+import com.mjc.school.repository.entity.NewsModel;
+import com.mjc.school.repository.source.DataSource;
 import com.mjc.school.repository.util.SequenceGenerator;
 
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
-public class NewsRepository implements CrudRepository<News> {
-    private static NewsRepository instance;
+public class NewsRepository implements CrudRepository<NewsModel> {
 
-    private Map<Long, News> dataSource;
+    private final DataSource dataSource;
 
-    private NewsRepository() {
-        dataSource = new ConcurrentHashMap<>();
+    public NewsRepository() {
+        dataSource = DataSource.getInstance();
     }
 
-    public static NewsRepository getInstance() {
-        if (instance == null) {
-            instance = new NewsRepository();
-        }
-
-        return instance;
-    }
 
 
     @Override
-    public News create(News entity) {
+    public NewsModel create(NewsModel entity) {
         entity.setId(SequenceGenerator.getNextSequence());
-        return dataSource.putIfAbsent(entity.getId(), entity) == null ? entity : null;
+        return dataSource.getNewsMap().putIfAbsent(entity.getId(), entity) == null ? entity : null;
     }
 
     @Override
-    public News get(long id) {
-        return dataSource.get(id);
+    public NewsModel readById(long id) {
+        return dataSource.getNewsMap().get(id);
     }
 
     @Override
-    public List<News> getAll() {
-        return List.copyOf(dataSource.values());
+    public List<NewsModel> readAll() {
+        return List.copyOf(dataSource.getNewsMap().values());
     }
 
     @Override
-    public News update(News entity) {
-        return dataSource.computeIfPresent(entity.getId(), (key, value) -> entity);
+    public NewsModel update(NewsModel entity) {
+        return dataSource.getNewsMap().computeIfPresent(entity.getId(), (key, value) -> entity);
     }
 
     @Override
-    public boolean delete(long id) {
-        return dataSource.remove(id) != null;
+    public Boolean delete(long id) {
+        return dataSource.getNewsMap().remove(id) != null;
     }
 }

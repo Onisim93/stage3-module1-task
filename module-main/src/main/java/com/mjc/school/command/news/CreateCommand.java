@@ -3,7 +3,7 @@ package com.mjc.school.command.news;
 import com.mjc.school.util.MessageHelper;
 import com.mjc.school.command.Command;
 import com.mjc.school.controller.NewsController;
-import com.mjc.school.service.dto.NewsDTO;
+import com.mjc.school.service.dto.NewsDto;
 
 public class CreateCommand implements Command<NewsController> {
 
@@ -18,7 +18,7 @@ public class CreateCommand implements Command<NewsController> {
         MessageHelper.printMessage("Input author ID:");
         long authorId = MessageHelper.readId();
 
-        NewsDTO newsDTO = new NewsDTO(title,content,authorId);
+        NewsDto newsDTO = new NewsDto(title,content,authorId);
         MessageHelper.printMessage(controller.create(newsDTO).toString());
     }
 }

@@ -9,6 +9,5 @@ public class ExitCommand implements Command<NewsController> {
     @Override
     public void execute(NewsController controller) {
         MessageHelper.printMessage("Goodbye!");
-        System.exit(0);
     }
 }

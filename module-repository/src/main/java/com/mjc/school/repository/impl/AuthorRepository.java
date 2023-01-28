@@ -1,55 +1,43 @@
 package com.mjc.school.repository.impl;
 
 import com.mjc.school.repository.CrudRepository;
-import com.mjc.school.repository.entity.Author;
+import com.mjc.school.repository.entity.AuthorModel;
+import com.mjc.school.repository.source.DataSource;
 import com.mjc.school.repository.util.SequenceGenerator;
 
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 
-public class AuthorRepository implements CrudRepository<Author> {
+public class AuthorRepository implements CrudRepository<AuthorModel> {
+    private final DataSource dataSource;
 
-    private static AuthorRepository instance;
-    private Map<Long, Author> dataSource;
-
-    private AuthorRepository() {
-        dataSource = new ConcurrentHashMap<>();
-    }
-
-    public static AuthorRepository getInstance() {
-        if (instance == null) {
-            instance = new AuthorRepository();
-        }
-
-
-        return instance;
+    public AuthorRepository() {
+        dataSource = DataSource.getInstance();
     }
 
     @Override
-    public Author create(Author entity) {
+    public AuthorModel create(AuthorModel entity) {
         entity.setId(SequenceGenerator.getNextSequence());
-        return dataSource.putIfAbsent(entity.getId(), entity) == null ? entity : null;
+        return dataSource.getAuthorMap().putIfAbsent(entity.getId(), entity) == null ? entity : null;
     }
 
     @Override
-    public Author get(long id) {
-        return dataSource.get(id);
+    public AuthorModel readById(long id) {
+        return dataSource.getAuthorMap().get(id);
     }
 
     @Override
-    public List<Author> getAll() {
-        return List.copyOf(dataSource.values());
+    public List<AuthorModel> readAll() {
+        return List.copyOf(dataSource.getAuthorMap().values());
     }
 
     @Override
-    public Author update(Author entity) {
-        return dataSource.computeIfPresent(entity.getId(), (key, value) -> entity);
+    public AuthorModel update(AuthorModel entity) {
+        return dataSource.getAuthorMap().computeIfPresent(entity.getId(), (key, value) -> entity);
     }
 
     @Override
-    public boolean delete(long id) {
-        return dataSource.remove(id) != null;
+    public Boolean delete(long id) {
+        return dataSource.getAuthorMap().remove(id) != null;
     }
 }

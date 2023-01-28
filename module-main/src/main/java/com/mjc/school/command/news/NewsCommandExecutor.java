@@ -18,6 +18,8 @@ public class NewsCommandExecutor {
         init();
     }
 
+    private NewsCommandExecutor(){}
+
     public static void executeCommand(Operation operation, NewsController controller) {
         try {
             listCommands.get(operation).execute(controller);

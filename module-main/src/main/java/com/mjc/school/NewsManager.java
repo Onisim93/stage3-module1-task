@@ -4,7 +4,6 @@ import com.mjc.school.command.news.NewsCommandExecutor;
 import com.mjc.school.util.MessageHelper;
 import com.mjc.school.controller.NewsController;
 import com.mjc.school.command.Operation;
-import com.mjc.school.service.util.LoadDataSource;
 
 import java.io.IOException;
 
@@ -17,7 +16,6 @@ public class NewsManager {
     private NewsManager() {
         controller = NewsController.getInstance();
         menu = Menu.getInstance();
-        LoadDataSource.loadData();
     }
 
     public static NewsManager getInstance() {
@@ -29,10 +27,11 @@ public class NewsManager {
 
 
     public void init() {
-        while (true) {
+        int input = -1;
+        while (input != 0) {
             menu.print();
             try {
-                int input = MessageHelper.readOperation();
+                input = MessageHelper.readOperation();
                 Operation operation = Operation.values()[input];
                 NewsCommandExecutor.executeCommand(operation, controller);
             }

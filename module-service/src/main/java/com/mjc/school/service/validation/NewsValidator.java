@@ -1,6 +1,6 @@
 package com.mjc.school.service.validation;
 
-import com.mjc.school.service.dto.NewsDTO;
+import com.mjc.school.service.dto.NewsDto;
 import com.mjc.school.service.exception.ErrorNotification;
 
 public class NewsValidator {
@@ -8,11 +8,13 @@ public class NewsValidator {
     private static final String TITLE_NO_VALID = "ERROR_CODE: 000003 News title field should have length of value from 5 to 30.";
     private static final String CONTENT_NO_VALID = "ERROR_CODE: 000004 News content field should have length of value from 5 to 255.";
 
-    public static boolean isNew (NewsDTO news) {
+    public static boolean isNew (NewsDto news) {
         return news.getId() == null;
     }
 
-    public static ErrorNotification validate (NewsDTO news) {
+    private NewsValidator() {}
+
+    public static ErrorNotification validate (NewsDto news) {
         ErrorNotification errorNotification = new ErrorNotification();
 
         String title = news.getTitle();

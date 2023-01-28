@@ -11,11 +11,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Author extends AbstractBaseEntity{
+@AllArgsConstructor
+public class AuthorModel extends AbstractBaseEntity{
 
     private String name;
 
-    public Author (String name) {
+    public AuthorModel(Long id, String name) {
+        super(id);
         this.name = name;
     }
+
 }

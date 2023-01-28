@@ -11,6 +11,8 @@ public class MessageHelper {
         reader = new BufferedReader(new InputStreamReader(System.in));
     }
 
+    private MessageHelper() {};
+
     public static void printMessage(String message) {
         System.out.println(message);
     }
@@ -19,7 +21,8 @@ public class MessageHelper {
         try {
             return reader.readLine();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            printMessage("Incorrect input. Try again.");
+            return readString();
         }
     }
 

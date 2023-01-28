@@ -4,7 +4,7 @@ import com.mjc.school.util.MessageHelper;
 import com.mjc.school.command.Operation;
 
 public class Menu {
-    private StringBuilder menu;
+    private StringBuilder listMenu;
 
     private static Menu instance;
 
@@ -20,18 +20,18 @@ public class Menu {
     }
 
     public void init() {
-        menu = new StringBuilder();
+        listMenu = new StringBuilder();
         Operation[] operations = Operation.values();
         for (Operation operation : operations) {
             if (operation == Operation.EXIT) {
                 continue;
             }
-            menu.append(operation.getDescription()).append("\n");
+            listMenu.append(operation.getDescription()).append("\n");
         }
-        menu.append(Operation.EXIT.getDescription());
+        listMenu.append(Operation.EXIT.getDescription());
     }
 
     public void print() {
-        MessageHelper.printMessage(menu.toString());
+        MessageHelper.printMessage(listMenu.toString());
     }
 }

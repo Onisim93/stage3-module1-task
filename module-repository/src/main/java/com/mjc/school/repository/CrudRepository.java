@@ -8,11 +8,11 @@ public interface CrudRepository<E extends AbstractBaseEntity> {
 
     E create(E entity);
 
-    E get (long id);
+    E readById(long id);
 
-    List<E> getAll();
+    List<E> readAll();
 
     E update (E entity);
 
-    boolean delete (long id);
+    Boolean delete (long id);
 }

@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class News extends AbstractBaseEntity{
+public class NewsModel extends AbstractBaseEntity{
     private String title;
     private String content;
     private LocalDateTime createDate;
@@ -19,12 +19,19 @@ public class News extends AbstractBaseEntity{
     private LocalDateTime lastUpdateDate;
     private Long authorId;
 
-    public News(String title, String content, long authorId) {
+    public NewsModel(String title, String content, long authorId) {
         this.title = title;
         this.content = content;
         this.authorId = authorId;
         this.createDate = LocalDateTime.now();
         this.lastUpdateDate = LocalDateTime.now();
+    }
+
+    public NewsModel(Long id, String title, String content, long authorId) {
+        super(id);
+        this.title = title;
+        this.content = content;
+        this.authorId = authorId;
     }
 
 

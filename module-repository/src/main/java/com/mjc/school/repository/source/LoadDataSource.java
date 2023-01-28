@@ -1,9 +1,8 @@
-package com.mjc.school.service.util;
+package com.mjc.school.repository.source;
 
-import com.mjc.school.repository.impl.AuthorRepository;
-import com.mjc.school.repository.impl.NewsRepository;
-import com.mjc.school.repository.entity.Author;
-import com.mjc.school.repository.entity.News;
+import com.mjc.school.repository.entity.AuthorModel;
+import com.mjc.school.repository.entity.NewsModel;
+import com.mjc.school.repository.util.SequenceGenerator;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -19,7 +18,9 @@ public class LoadDataSource {
     private static final List<String> titleList = new ArrayList<>();
     private static final List<String> contentList = new ArrayList<>();
 
-    public static void loadDataSource(List<String> list, String path) {
+    private LoadDataSource(){}
+
+    public static void loadFromFile(List<String> list, String path) {
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
             while (reader.ready()) {
                 list.add(reader.readLine());
@@ -31,19 +32,19 @@ public class LoadDataSource {
 
     }
 
-    public static void loadData() {
-        NewsRepository newsRepository = NewsRepository.getInstance();
-        AuthorRepository authorRepository = AuthorRepository.getInstance();
+    public static void loadData(DataSource dataSource) {
 
-        loadDataSource(authorList, PATH_TO_AUTHORS);
-        loadDataSource(titleList, PATH_TO_TITLES);
-        loadDataSource(contentList, PATH_TO_CONTENTS);
+        loadFromFile(authorList, PATH_TO_AUTHORS);
+        loadFromFile(titleList, PATH_TO_TITLES);
+        loadFromFile(contentList, PATH_TO_CONTENTS);
 
             for (int i=0; i<20;i++) {
-                int random = new Random().nextInt(20);
-                Author author = authorRepository.create(new Author(authorList.get(i)));
-                newsRepository.create(new News(titleList.get(random), contentList.get(random), author.getId()));
+                Random random = new Random();
+                AuthorModel authorModel = new AuthorModel(SequenceGenerator.getNextSequence(),authorList.get(i));
+                dataSource.getAuthorMap().put(authorModel.getId(), authorModel);
+                NewsModel newsModel = new NewsModel(SequenceGenerator.getNextSequence(), titleList.get(random.nextInt(20)), contentList.get(random.nextInt(20)), authorModel.getId());
+                dataSource.getNewsMap().put(newsModel.getId(), newsModel);
             }
 
-    }
+     }
 }

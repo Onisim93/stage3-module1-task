@@ -2,8 +2,8 @@ package com.mjc.school.service;
 
 import com.mjc.school.repository.impl.AuthorRepository;
 import com.mjc.school.repository.impl.NewsRepository;
-import com.mjc.school.repository.entity.News;
-import com.mjc.school.service.dto.NewsDTO;
+import com.mjc.school.repository.entity.NewsModel;
+import com.mjc.school.service.dto.NewsDto;
 import com.mjc.school.service.exception.InvalidDataException;
 import com.mjc.school.service.exception.NoSuchEntityException;
 import com.mjc.school.service.exception.ErrorNotification;
@@ -13,55 +13,61 @@ import com.mjc.school.service.validation.NewsValidator;
 import java.util.List;
 
 
-public class NewsService implements AbstractService<NewsDTO> {
-    private final NewsRepository newsRepository = NewsRepository.getInstance();
-    private final AuthorRepository authorRepository = AuthorRepository.getInstance();
+public class NewsService implements AbstractService<NewsDto> {
+    private final String NO_SUCH_ENTITY_MSG = "%s with id %d does not exist.";
+    private final NewsRepository newsRepository;
+    private final AuthorRepository authorRepository;
+
+    public NewsService() {
+        newsRepository = new NewsRepository();
+        authorRepository = new AuthorRepository();
+    }
 
     @Override
-    public NewsDTO create(NewsDTO entity) {
+    public NewsDto create(NewsDto entity) {
         ErrorNotification errorNotification = NewsValidator.validate(entity);
         if (errorNotification.hasErrors()) {
             throw new InvalidDataException(errorNotification.getErrorList().toString());
         }
-        if (authorRepository.get(entity.getAuthorId()) == null) {
-            throw new NoSuchEntityException("Author with id " + entity.getAuthorId() + " does not exist.");
+        if (authorRepository.readById(entity.getAuthorId()) == null) {
+            throw new NoSuchEntityException(String.format(NO_SUCH_ENTITY_MSG, "Author", entity.getAuthorId()));
         }
 
-        News created = newsRepository.create(NewsMapper.INSTANCE.toEntity(entity));
+        NewsModel created = newsRepository.create(NewsMapper.INSTANCE.toEntity(entity));
         return NewsMapper.INSTANCE.toDto(created);
     }
 
     @Override
-    public List<NewsDTO> getAll() {
-        return NewsMapper.INSTANCE.toListDto(newsRepository.getAll());
+    public List<NewsDto> getAll() {
+        return NewsMapper.INSTANCE.toListDto(newsRepository.readAll());
     }
 
     @Override
-    public NewsDTO get(long id) throws NoSuchEntityException{
-        News entity = newsRepository.get(id);
+    public NewsDto get(long id) throws NoSuchEntityException{
+        NewsModel entity = newsRepository.readById(id);
         if (entity == null) {
-            throw new NoSuchEntityException("News with id " + id + " does not exist.");
+            throw new NoSuchEntityException(String.format(NO_SUCH_ENTITY_MSG, "News", id));
         }
-        return NewsMapper.INSTANCE.toDto(newsRepository.get(id));
+        return NewsMapper.INSTANCE.toDto(newsRepository.readById(id));
     }
 
     @Override
     public boolean delete(long id) {
         if (!newsRepository.delete(id)) {
-            throw new NoSuchEntityException("News with id " + id + " does not exist.");
+            throw new NoSuchEntityException(String.format(NO_SUCH_ENTITY_MSG, "News", id));
         }
         return true;
     }
 
     @Override
-    public NewsDTO update(NewsDTO entity) {
-        News updated = newsRepository.get(entity.getId());
+    public NewsDto update(NewsDto entity) {
+        NewsModel updated = newsRepository.readById(entity.getId());
         if (updated == null) {
-            throw new NoSuchEntityException("News with id " + entity.getId() + " does not exist.");
+            throw new NoSuchEntityException(String.format(NO_SUCH_ENTITY_MSG, "News", entity.getId()));
         }
 
-        if (authorRepository.get(entity.getAuthorId()) == null) {
-            throw new NoSuchEntityException("Author with id " + entity.getAuthorId() + " does not exist.");
+        if (authorRepository.readById(entity.getAuthorId()) == null) {
+            throw new NoSuchEntityException(String.format(NO_SUCH_ENTITY_MSG, "Author", entity.getAuthorId()));
         }
 
         ErrorNotification errorNotification = NewsValidator.validate(entity);
