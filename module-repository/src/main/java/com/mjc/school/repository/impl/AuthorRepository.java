@@ -1,6 +1,6 @@
 package com.mjc.school.repository.impl;
 
-import com.mjc.school.repository.CrudRepository;
+import com.mjc.school.repository.Repository;
 import com.mjc.school.repository.entity.AuthorModel;
 import com.mjc.school.repository.source.DataSource;
 import com.mjc.school.repository.util.SequenceGenerator;
@@ -8,7 +8,7 @@ import com.mjc.school.repository.util.SequenceGenerator;
 import java.util.List;
 
 
-public class AuthorRepository implements CrudRepository<AuthorModel> {
+public class AuthorRepository implements Repository<AuthorModel> {
     private final DataSource dataSource;
 
     public AuthorRepository() {
@@ -22,7 +22,7 @@ public class AuthorRepository implements CrudRepository<AuthorModel> {
     }
 
     @Override
-    public AuthorModel readById(long id) {
+    public AuthorModel readById(Long id) {
         return dataSource.getAuthorMap().get(id);
     }
 
@@ -37,7 +37,7 @@ public class AuthorRepository implements CrudRepository<AuthorModel> {
     }
 
     @Override
-    public Boolean delete(long id) {
+    public Boolean delete(Long id) {
         return dataSource.getAuthorMap().remove(id) != null;
     }
 }

@@ -1,9 +1,6 @@
 package com.mjc.school.repository.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -11,6 +8,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class NewsModel extends AbstractBaseEntity{
     private String title;
     private String content;
@@ -19,7 +17,7 @@ public class NewsModel extends AbstractBaseEntity{
     private LocalDateTime lastUpdateDate;
     private Long authorId;
 
-    public NewsModel(String title, String content, long authorId) {
+    public NewsModel(String title, String content, Long authorId) {
         this.title = title;
         this.content = content;
         this.authorId = authorId;
@@ -27,7 +25,7 @@ public class NewsModel extends AbstractBaseEntity{
         this.lastUpdateDate = LocalDateTime.now();
     }
 
-    public NewsModel(Long id, String title, String content, long authorId) {
+    public NewsModel(Long id, String title, String content, Long authorId) {
         super(id);
         this.title = title;
         this.content = content;

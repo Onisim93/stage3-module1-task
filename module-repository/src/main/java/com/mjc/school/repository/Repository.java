@@ -4,15 +4,15 @@ import com.mjc.school.repository.entity.AbstractBaseEntity;
 
 import java.util.List;
 
-public interface CrudRepository<E extends AbstractBaseEntity> {
+public interface Repository<E> {
 
     E create(E entity);
 
-    E readById(long id);
+    E readById(Long id);
 
     List<E> readAll();
 
     E update (E entity);
 
-    Boolean delete (long id);
+    Boolean delete (Long id);
 }

@@ -39,10 +39,9 @@ public class LoadDataSource {
         loadFromFile(contentList, PATH_TO_CONTENTS);
 
             for (int i=0; i<20;i++) {
-                Random random = new Random();
                 AuthorModel authorModel = new AuthorModel(SequenceGenerator.getNextSequence(),authorList.get(i));
                 dataSource.getAuthorMap().put(authorModel.getId(), authorModel);
-                NewsModel newsModel = new NewsModel(SequenceGenerator.getNextSequence(), titleList.get(random.nextInt(20)), contentList.get(random.nextInt(20)), authorModel.getId());
+                NewsModel newsModel = new NewsModel(SequenceGenerator.getNextSequence(), titleList.get(i), contentList.get(i), authorModel.getId());
                 dataSource.getNewsMap().put(newsModel.getId(), newsModel);
             }
 

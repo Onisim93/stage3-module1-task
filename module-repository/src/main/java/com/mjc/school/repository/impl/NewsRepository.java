@@ -1,13 +1,13 @@
 package com.mjc.school.repository.impl;
 
-import com.mjc.school.repository.CrudRepository;
+import com.mjc.school.repository.Repository;
 import com.mjc.school.repository.entity.NewsModel;
 import com.mjc.school.repository.source.DataSource;
 import com.mjc.school.repository.util.SequenceGenerator;
 
 import java.util.List;
 
-public class NewsRepository implements CrudRepository<NewsModel> {
+public class NewsRepository implements Repository<NewsModel> {
 
     private final DataSource dataSource;
 
@@ -24,7 +24,7 @@ public class NewsRepository implements CrudRepository<NewsModel> {
     }
 
     @Override
-    public NewsModel readById(long id) {
+    public NewsModel readById(Long id) {
         return dataSource.getNewsMap().get(id);
     }
 
@@ -39,7 +39,7 @@ public class NewsRepository implements CrudRepository<NewsModel> {
     }
 
     @Override
-    public Boolean delete(long id) {
+    public Boolean delete(Long id) {
         return dataSource.getNewsMap().remove(id) != null;
     }
 }
