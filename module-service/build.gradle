@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+}
+
+group 'com.mjc.school'
+version 'unspecified'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    lombokVersion = '1.18.22'
+}
+
+dependencies {
+    implementation project(':module-repository')
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    implementation 'org.mapstruct:mapstruct:1.5.3.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
+}
+
+test {
+    useJUnitPlatform()
+}
