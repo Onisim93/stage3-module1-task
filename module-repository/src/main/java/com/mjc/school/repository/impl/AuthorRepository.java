@@ -1,48 +1,50 @@
-package com.mjc.school.repository;
+package com.mjc.school.repository.impl;
 
-import com.mjc.school.repository.entity.News;
+import com.mjc.school.repository.CrudRepository;
+import com.mjc.school.repository.entity.Author;
 import com.mjc.school.repository.util.SequenceGenerator;
 
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class NewsRepository implements CrudRepository<News> {
-    private static NewsRepository repository;
 
-    private Map<Long, News> dataSource;
+public class AuthorRepository implements CrudRepository<Author> {
 
-    private NewsRepository() {
+    private static AuthorRepository instance;
+    private Map<Long, Author> dataSource;
+
+    private AuthorRepository() {
         dataSource = new ConcurrentHashMap<>();
     }
 
-    public static NewsRepository getRepository() {
-        if (repository == null) {
-            repository = new NewsRepository();
+    public static AuthorRepository getInstance() {
+        if (instance == null) {
+            instance = new AuthorRepository();
         }
 
-        return repository;
+
+        return instance;
     }
 
-
     @Override
-    public News create(News entity) {
+    public Author create(Author entity) {
         entity.setId(SequenceGenerator.getNextSequence());
         return dataSource.putIfAbsent(entity.getId(), entity) == null ? entity : null;
     }
 
     @Override
-    public News get(long id) {
+    public Author get(long id) {
         return dataSource.get(id);
     }
 
     @Override
-    public List<News> getAll() {
+    public List<Author> getAll() {
         return List.copyOf(dataSource.values());
     }
 
     @Override
-    public News update(News entity) {
+    public Author update(Author entity) {
         return dataSource.computeIfPresent(entity.getId(), (key, value) -> entity);
     }
 

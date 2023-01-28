@@ -1,7 +1,7 @@
 package com.mjc.school.service;
 
-import com.mjc.school.repository.AuthorRepository;
-import com.mjc.school.repository.NewsRepository;
+import com.mjc.school.repository.impl.AuthorRepository;
+import com.mjc.school.repository.impl.NewsRepository;
 import com.mjc.school.repository.entity.News;
 import com.mjc.school.service.dto.NewsDTO;
 import com.mjc.school.service.exception.InvalidDataException;
@@ -14,8 +14,8 @@ import java.util.List;
 
 
 public class NewsService implements AbstractService<NewsDTO> {
-    private final NewsRepository newsRepository = NewsRepository.getRepository();
-    private final AuthorRepository authorRepository = AuthorRepository.getRepository();
+    private final NewsRepository newsRepository = NewsRepository.getInstance();
+    private final AuthorRepository authorRepository = AuthorRepository.getInstance();
 
     @Override
     public NewsDTO create(NewsDTO entity) {

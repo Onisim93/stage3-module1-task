@@ -1,7 +1,7 @@
 package com.mjc.school.service.util;
 
-import com.mjc.school.repository.AuthorRepository;
-import com.mjc.school.repository.NewsRepository;
+import com.mjc.school.repository.impl.AuthorRepository;
+import com.mjc.school.repository.impl.NewsRepository;
 import com.mjc.school.repository.entity.Author;
 import com.mjc.school.repository.entity.News;
 
@@ -32,8 +32,8 @@ public class LoadDataSource {
     }
 
     public static void loadData() {
-        NewsRepository newsRepository = NewsRepository.getRepository();
-        AuthorRepository authorRepository = AuthorRepository.getRepository();
+        NewsRepository newsRepository = NewsRepository.getInstance();
+        AuthorRepository authorRepository = AuthorRepository.getInstance();
 
         loadDataSource(authorList, PATH_TO_AUTHORS);
         loadDataSource(titleList, PATH_TO_TITLES);
